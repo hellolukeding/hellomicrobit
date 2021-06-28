@@ -37,15 +37,34 @@ input.onButtonPressed(Button.B, function () {
 })
 let 启动 = 0
 启动 = 0
-// 机械爪下限
+// 机械爪上限60下限20
+// 
 neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S4, 60)
-// 高度上限
+// 高度上限70下限10
 neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 70)
 PlanetX_AILens.initModule()
-PlanetX_AILens.cameraImage()
+PlanetX_AILens.switchfunc(PlanetX_AILens.FuncList.Card)
+// 巡线
 basic.forever(function () {
     if (启动 == 1) {
         巡线()
     }
-    basic.showIcon(IconNames.Heart)
+})
+// 摄像头
+basic.forever(function () {
+    PlanetX_AILens.cameraImage()
+    if (PlanetX_AILens.trafficCard(PlanetX_AILens.trafficCards.turnleft)) {
+        basic.showIcon(IconNames.Meh)
+    } else {
+        basic.showIcon(IconNames.No)
+    }
+})
+// 摄像头
+basic.forever(function () {
+    PlanetX_AILens.cameraImage()
+    if (PlanetX_AILens.letterCard(PlanetX_AILens.letterCards.A)) {
+        basic.showString("A")
+    } else {
+        basic.showIcon(IconNames.No)
+    }
 })
